@@ -2,6 +2,8 @@
 // thread-safe stack
 //
 
+#pragma once
+
 #include <exception>
 #include <memory>
 #include <stack>
@@ -57,16 +59,16 @@ public:
     }
 };
 
-int main(){
-    threadsafe_stack<int> stk;
-    stk.push(100);
-    stk.push(200);
-    std::shared_ptr<int> p = stk.pop();
-    std::cout << *p << std::endl;
-    int result = 0;
-    stk.pop(result);
-    std::cout << result << std::endl;
-    stk.pop();  // exception
-
-    return 0;
-}
+//int main(){
+//    threadsafe_stack<int> stk;
+//    stk.push(100);
+//    stk.push(200);
+//    std::shared_ptr<int> p = stk.pop();
+//    std::cout << *p << std::endl;
+//    int result = 0;
+//    stk.pop(result);
+//    std::cout << result << std::endl;
+//    stk.pop();  // exception
+//
+//    return 0;
+//}
