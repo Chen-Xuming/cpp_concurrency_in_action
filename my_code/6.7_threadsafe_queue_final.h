@@ -26,7 +26,7 @@ public:
             node * const new_tail = p.get();
             tail->next = std::move(p);
             tail = new_tail;
-            std::cout << "[push] " << *new_data << std::endl;
+//            std::cout << "[push] " << *new_data << std::endl;
         }   // 使用代码块{}加速tail_lock解锁
 
         data_cond.notify_one();
@@ -34,7 +34,7 @@ public:
 
     std::shared_ptr<T> wait_and_pop(){
         std::unique_ptr<node> const old_head = wait_pop_head();
-        std::cout << "[wait_pop] " << *old_head->data << std::endl;
+//        std::cout << "[wait_pop] " << *old_head->data << std::endl;
         return old_head->data;
     }
 
@@ -52,7 +52,7 @@ public:
 
     bool try_pop(T &val){
         std::unique_ptr<node> const old_head = try_pop_head(val);
-        return old_head;
+        return old_head != nullptr;
     }
 
     bool empty(){
@@ -122,35 +122,35 @@ private:
 };
 
 
-threadsafe_queue<int> q;
-
-void write(){
-    int num = 100;
-    for(int i = 0; i < 10; i++){
-        q.push(num);
-        num++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-}
-
-void try_read(){
-    for(int i = 0; i < 5; i++){
-        q.try_pop();
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    }
-}
-
-void wait_read(){
-    for(int i = 0; i < 5; i++){
-        q.wait_and_pop();
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    }
-}
-
-int main(){
-    std::thread t1(write), t2(try_read), t3(wait_read);
-    t1.join();
-    t2.join();
-    t3.join();
-    return 0;
-}
+//threadsafe_queue<int> q;
+//
+//void write(){
+//    int num = 100;
+//    for(int i = 0; i < 10; i++){
+//        q.push(num);
+//        num++;
+//        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+//    }
+//}
+//
+//void try_read(){
+//    for(int i = 0; i < 5; i++){
+//        q.try_pop();
+//        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+//    }
+//}
+//
+//void wait_read(){
+//    for(int i = 0; i < 5; i++){
+//        q.wait_and_pop();
+//        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+//    }
+//}
+//
+//int main(){
+//    std::thread t1(write), t2(try_read), t3(wait_read);
+//    t1.join();
+//    t2.join();
+//    t3.join();
+//    return 0;
+//}
